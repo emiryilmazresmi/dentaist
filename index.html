@@ -1082,6 +1082,8 @@
   .faq-item.open .faq-icon { transform:rotate(45deg); }
   .faq-answer { max-height:0; overflow:hidden; transition:max-height 0.4s ease; }
   .faq-answer p { padding-bottom:24px; font-size:13px; color:var(--white-dim); line-height:1.8; }
+  .service-select-card:hover { border-color: var(--gold) !important; transform: translateY(-2px); }
+  .service-select-card.selected { border-color: var(--gold) !important; background: rgba(201,168,76,0.1) !important; }
 </style>
 </head>
 <body>
@@ -1584,38 +1586,97 @@
     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.5!2d28.7!3d40.98!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zQXZjxLFsYXIsIMSwc3RhbmJ1bA!5e0!3m2!1str!2str!4v1" width="100%" height="250" style="border:0;filter:invert(90%) hue-rotate(180deg);" allowfullscreen="" loading="lazy"></iframe>
   </div>
 
-  <form class="contact-form reveal" action="https://formspree.io/f/FORM_ID" method="POST">
-    <div class="form-row">
-      <div class="form-group">
-        <label data-tr="Adınız" data-en="Your Name" data-ar="اسمك">Adınız</label>
-        <input type="text" name="name" required>
+<div class="contact-form reveal" id="multiStepForm">
+  <!-- Progress Bar -->
+  <div style="display:flex; gap:8px; margin-bottom:48px;">
+    <div class="step-bar active" id="bar1" style="flex:1; height:2px; background:var(--gold); transition:all 0.3s;"></div>
+    <div class="step-bar" id="bar2" style="flex:1; height:2px; background:rgba(201,168,76,0.2); transition:all 0.3s;"></div>
+    <div class="step-bar" id="bar3" style="flex:1; height:2px; background:rgba(201,168,76,0.2); transition:all 0.3s;"></div>
+  </div>
+  <!-- Step 1: Service Selection -->
+  <div class="form-step" id="step1">
+    <div style="margin-bottom:32px;">
+      <div style="font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:8px;" data-tr="Adım 1 / 3" data-en="Step 1 / 3" data-ar="الخطوة 1 / 3">Adım 1 / 3</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:32px;" data-tr="Hangi tedaviyi <em>istiyorsunuz?</em>" data-en="Which treatment <em>do you want?</em>" data-ar="أي علاج <em>تريد؟</em>">Hangi tedaviyi <em>istiyorsunuz?</em></div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div class="service-select-card" onclick="selectService(this, 'Diş İmplantı')" style="background:var(--dark-3); border:1px solid rgba(201,168,76,0.2); padding:24px; cursor:pointer; transition:all 0.3s; text-align:center;">
+        <div style="font-size:28px; margin-bottom:8px;">🦷</div>
+        <div style="font-size:13px;" data-tr="Diş İmplantı" data-en="Dental Implant" data-ar="زراعة الأسنان">Diş İmplantı</div>
       </div>
-      <div class="form-group">
-        <label data-tr="Telefonunuz" data-en="Your Phone" data-ar="هاتفك">Telefonunuz</label>
-        <input type="tel" name="phone" required>
+      <div class="service-select-card" onclick="selectService(this, 'Gülüş Tasarımı')" style="background:var(--dark-3); border:1px solid rgba(201,168,76,0.2); padding:24px; cursor:pointer; transition:all 0.3s; text-align:center;">
+        <div style="font-size:28px; margin-bottom:8px;">😁</div>
+        <div style="font-size:13px;" data-tr="Gülüş Tasarımı" data-en="Smile Design" data-ar="تصميم الابتسامة">Gülüş Tasarımı</div>
+      </div>
+      <div class="service-select-card" onclick="selectService(this, 'Zirkonyum Kaplama')" style="background:var(--dark-3); border:1px solid rgba(201,168,76,0.2); padding:24px; cursor:pointer; transition:all 0.3s; text-align:center;">
+        <div style="font-size:28px; margin-bottom:8px;">✨</div>
+        <div style="font-size:13px;" data-tr="Zirkonyum Kaplama" data-en="Zirconium Crown" data-ar="تيجان الزركونيا">Zirkonyum Kaplama</div>
+      </div>
+      <div class="service-select-card" onclick="selectService(this, 'Lamina Kaplama')" style="background:var(--dark-3); border:1px solid rgba(201,168,76,0.2); padding:24px; cursor:pointer; transition:all 0.3s; text-align:center;">
+        <div style="font-size:28px; margin-bottom:8px;">💎</div>
+        <div style="font-size:13px;" data-tr="Lamina Kaplama" data-en="Porcelain Veneers" data-ar="قشور البورسلين">Lamina Kaplama</div>
+      </div>
+      <div class="service-select-card" onclick="selectService(this, 'All-on-4 / All-on-6')" style="background:var(--dark-3); border:1px solid rgba(201,168,76,0.2); padding:24px; cursor:pointer; transition:all 0.3s; text-align:center;">
+        <div style="font-size:28px; margin-bottom:8px;">🏆</div>
+        <div style="font-size:13px;">All-on-4 / All-on-6</div>
+      </div>
+      <div class="service-select-card" onclick="selectService(this, 'Hollywood Gülüşü')" style="background:var(--dark-3); border:1px solid rgba(201,168,76,0.2); padding:24px; cursor:pointer; transition:all 0.3s; text-align:center;">
+        <div style="font-size:28px; margin-bottom:8px;">⭐</div>
+        <div style="font-size:13px;" data-tr="Hollywood Gülüşü" data-en="Hollywood Smile" data-ar="ابتسامة هوليوود">Hollywood Gülüşü</div>
       </div>
     </div>
-    <div class="form-group">
-      <label data-tr="E-posta" data-en="Email" data-ar="البريد الإلكتروني">E-posta</label>
-      <input type="email" name="email">
+    <input type="hidden" id="selectedService" value="">
+    <button onclick="nextStep(1)" class="btn-primary" style="width:100%; border:none; cursor:pointer; margin-top:24px; padding:18px;" data-tr="Devam Et →" data-en="Continue →" data-ar="متابعة →">Devam Et →</button>
+  </div>
+  <!-- Step 2: Personal Info -->
+  <div class="form-step" id="step2" style="display:none;">
+    <div style="margin-bottom:32px;">
+      <div style="font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:8px;" data-tr="Adım 2 / 3" data-en="Step 2 / 3" data-ar="الخطوة 2 / 3">Adım 2 / 3</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:32px;" data-tr="Bilgilerinizi <em>paylaşın</em>" data-en="Share your <em>information</em>" data-ar="شارك <em>معلوماتك</em>">Bilgilerinizi <em>paylaşın</em></div>
     </div>
     <div class="form-group">
-      <label data-tr="Hizmet Seçin" data-en="Select Service" data-ar="اختر الخدمة">Hizmet Seçin</label>
-      <select name="service">
-        <option data-tr="Diş İmplantı" data-en="Dental Implant" data-ar="زراعة الأسنان">Diş İmplantı</option>
-        <option data-tr="Gülüş Tasarımı" data-en="Smile Design" data-ar="تصميم الابتسامة">Gülüş Tasarımı</option>
-        <option data-tr="Zirkonyum Kaplama" data-en="Zirconium Crown" data-ar="تيجان الزركونيا">Zirkonyum Kaplama</option>
-        <option data-tr="Lamina Kaplama" data-en="Porcelain Veneers" data-ar="قشور البورسلين">Lamina Kaplama</option>
-        <option data-tr="All-on-4 / All-on-6" data-en="All-on-4 / All-on-6" data-ar="أول أون 4 / أول أون 6">All-on-4 / All-on-6</option>
-        <option data-tr="Hollywood Gülüşü" data-en="Hollywood Smile" data-ar="ابتسامة هوليوود">Hollywood Gülüşü</option>
-      </select>
+      <label data-tr="Adınız Soyadınız" data-en="Full Name" data-ar="الاسم الكامل">Adınız Soyadınız</label>
+      <input type="text" id="fname" style="width:100%; background:var(--dark-3); border:1px solid rgba(201,168,76,0.2); color:var(--white); padding:16px 18px; font-family:'Montserrat',sans-serif; font-size:13px; outline:none;">
     </div>
     <div class="form-group">
-      <label data-tr="Mesajınız" data-en="Your Message" data-ar="رسالتك">Mesajınız</label>
-      <textarea name="message"></textarea>
+      <label data-tr="Telefon / WhatsApp" data-en="Phone / WhatsApp" data-ar="الهاتف / واتساب">Telefon / WhatsApp</label>
+      <input type="tel" id="fphone" style="width:100%; background:var(--dark-3); border:1px solid rgba(201,168,76,0.2); color:var(--white); padding:16px 18px; font-family:'Montserrat',sans-serif; font-size:13px; outline:none;">
     </div>
-    <button type="submit" class="btn-primary" style="width:100%; border:none; cursor:pointer;" data-tr="Randevu Talebi Gönder" data-en="Send Appointment Request" data-ar="إرسال طلب الموعد">Randevu Talebi Gönder</button>
-  </form>
+    <div class="form-group">
+      <label data-tr="Ülkeniz" data-en="Your Country" data-ar="بلدك">Ülkeniz</label>
+      <input type="text" id="fcountry" style="width:100%; background:var(--dark-3); border:1px solid rgba(201,168,76,0.2); color:var(--white); padding:16px 18px; font-family:'Montserrat',sans-serif; font-size:13px; outline:none;">
+    </div>
+    <div style="display:flex; gap:12px; margin-top:24px;">
+      <button onclick="prevStep(2)" style="flex:1; background:none; border:1px solid rgba(201,168,76,0.3); color:var(--white); padding:18px; cursor:pointer; font-family:'Montserrat',sans-serif; font-size:11px; letter-spacing:2px;" data-tr="← Geri" data-en="← Back" data-ar="→ رجوع">← Geri</button>
+      <button onclick="nextStep(2)" class="btn-primary" style="flex:2; border:none; cursor:pointer; padding:18px;" data-tr="Devam Et →" data-en="Continue →" data-ar="متابعة →">Devam Et →</button>
+    </div>
+  </div>
+  <!-- Step 3: Message & Submit -->
+  <div class="form-step" id="step3" style="display:none;">
+    <div style="margin-bottom:32px;">
+      <div style="font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:8px;" data-tr="Adım 3 / 3" data-en="Step 3 / 3" data-ar="الخطوة 3 / 3">Adım 3 / 3</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-size:32px;" data-tr="Son bir <em>adım!</em>" data-en="One last <em>step!</em>" data-ar="خطوة <em>أخيرة!</em>">Son bir <em>adım!</em></div>
+    </div>
+    <div class="form-group">
+      <label data-tr="Mesajınız (İsteğe bağlı)" data-en="Message (Optional)" data-ar="رسالتك (اختياري)">Mesajınız (İsteğe bağlı)</label>
+      <textarea id="fmessage" style="width:100%; height:120px; background:var(--dark-3); border:1px solid rgba(201,168,76,0.2); color:var(--white); padding:16px 18px; font-family:'Montserrat',sans-serif; font-size:13px; outline:none; resize:none;"></textarea>
+    </div>
+    <div style="background:var(--dark-3); border:1px solid rgba(201,168,76,0.15); padding:20px; margin-bottom:24px;">
+      <div style="font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:12px;" data-tr="Özet" data-en="Summary" data-ar="ملخص">Özet</div>
+      <div id="formSummary" style="font-size:13px; color:var(--white-dim); line-height:1.8;"></div>
+    </div>
+    <div style="display:flex; gap:12px;">
+      <button onclick="prevStep(3)" style="flex:1; background:none; border:1px solid rgba(201,168,76,0.3); color:var(--white); padding:18px; cursor:pointer; font-family:'Montserrat',sans-serif; font-size:11px; letter-spacing:2px;" data-tr="← Geri" data-en="← Back" data-ar="→ رجوع">← Geri</button>
+      <button onclick="submitForm()" class="btn-primary" style="flex:2; border:none; cursor:pointer; padding:18px;" data-tr="Randevu Talebi Gönder ✓" data-en="Send Appointment Request ✓" data-ar="إرسال طلب الموعد ✓">Randevu Talebi Gönder ✓</button>
+    </div>
+  </div>
+  <!-- Success -->
+  <div id="formSuccess" style="display:none; text-align:center; padding:60px 0;">
+    <div style="font-size:64px; margin-bottom:24px;">🎉</div>
+    <div style="font-family:'Cormorant Garamond',serif; font-size:36px; margin-bottom:16px;" data-tr="Talebiniz Alındı!" data-en="Request Received!" data-ar="تم استلام طلبك!">Talebiniz Alındı!</div>
+    <p style="color:var(--white-dim); font-size:13px;" data-tr="En kısa sürede WhatsApp veya telefon ile sizinle iletişime geçeceğiz." data-en="We will contact you via WhatsApp or phone as soon as possible." data-ar="سنتواصل معك عبر واتساب أو الهاتف في أقرب وقت ممكن.">En kısa sürede WhatsApp veya telefon ile sizinle iletişime geçeceğiz.</p>
+  </div>
+</div>
 </section>
 
 <!-- FOOTER -->
@@ -1776,6 +1837,32 @@ s1.charset='UTF-8';
 s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
+function selectService(el, service) {
+  document.querySelectorAll('.service-select-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('selectedService').value = service;
+}
+function nextStep(current) {
+  if (current === 1 && !document.getElementById('selectedService').value) { alert('Lütfen bir hizmet seçin'); return; }
+  if (current === 2) {
+    if (!document.getElementById('fname').value || !document.getElementById('fphone').value) { alert('Lütfen bilgilerinizi doldurun'); return; }
+    document.getElementById('formSummary').innerHTML = '🦷 ' + document.getElementById('selectedService').value + '<br>👤 ' + document.getElementById('fname').value + '<br>📞 ' + document.getElementById('fphone').value + '<br>🌍 ' + document.getElementById('fcountry').value;
+  }
+  document.getElementById('step' + current).style.display = 'none';
+  document.getElementById('step' + (current+1)).style.display = 'block';
+  document.getElementById('bar' + (current+1)).style.background = 'var(--gold)';
+}
+function prevStep(current) {
+  document.getElementById('step' + current).style.display = 'none';
+  document.getElementById('step' + (current-1)).style.display = 'block';
+}
+async function submitForm() {
+  const data = { service: document.getElementById('selectedService').value, name: document.getElementById('fname').value, phone: document.getElementById('fphone').value, country: document.getElementById('fcountry').value, message: document.getElementById('fmessage').value };
+  await fetch('https://formspree.io/f/mvzwjrpd', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(data) });
+  document.getElementById('step3').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+  document.getElementById('bar3').style.background = 'var(--gold)';
+}
 </script>
 <!--End of Tawk.to Script-->
 </body>
