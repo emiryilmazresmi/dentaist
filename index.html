@@ -1084,6 +1084,16 @@
   .faq-answer p { padding-bottom:24px; font-size:13px; color:var(--white-dim); line-height:1.8; }
   .service-select-card:hover { border-color: var(--gold) !important; transform: translateY(-2px); }
   .service-select-card.selected { border-color: var(--gold) !important; background: rgba(201,168,76,0.1) !important; }
+@media (max-width: 640px) {
+  #multiStepForm { max-width: 100% !important; }
+  .service-select-card { padding: 16px 10px !important; }
+  .service-select-card div:first-child { font-size: 22px !important; }
+  .service-select-card div:last-child { font-size: 11px !important; }
+  #step1 .btn-primary, #step2 button, #step3 button { padding: 14px !important; font-size: 10px !important; }
+  #step1 > div:nth-child(2) { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+  #contact { grid-template-columns: 1fr !important; gap: 40px !important; padding: 60px 20px !important; }
+  .form-step div[style*="font-size:32px"] { font-size: 24px !important; }
+}
 </style>
 </head>
 <body>
