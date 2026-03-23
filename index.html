@@ -1068,6 +1068,13 @@
     font-size: 28px;
     cursor: pointer;
   }
+  .slider-container { position:relative; overflow:hidden; border:1px solid rgba(201,168,76,0.15); cursor:ew-resize; user-select:none; }
+  .slider-before, .slider-after { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-size:18px; letter-spacing:4px; }
+  .slider-before { background:var(--dark-3); color:rgba(201,168,76,0.4); }
+  .slider-after { background:var(--dark-4); color:rgba(201,168,76,0.6); clip-path:inset(0 50% 0 0); }
+  .slider-handle { position:absolute; top:0; bottom:0; width:2px; background:var(--gold); left:50%; transform:translateX(-50%); z-index:10; }
+  .slider-handle::before { content:'◀ ▶'; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:var(--gold); color:var(--dark); padding:8px 12px; font-size:10px; white-space:nowrap; }
+  .before-after-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:60px; }
   .faq-item { border-bottom: 1px solid rgba(201,168,76,0.15); }
   .faq-question { padding: 24px 0; display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-size:14px; color:var(--white); letter-spacing:0.5px; }
   .faq-question:hover { color:var(--gold); }
@@ -1396,6 +1403,40 @@
 </section>
 
 <!-- FAQ -->
+<section id="beforeafter" style="padding:120px 60px; background:var(--dark);">
+  <div class="reveal" style="text-align:center; margin-bottom:0;">
+    <div class="section-label" style="justify-content:center;" data-tr="Önce & Sonra" data-en="Before & After" data-ar="قبل وبعد">Önce & Sonra</div>
+    <h2 class="section-title" data-tr="Gerçek<br><em>Dönüşümler</em>" data-en="Real<br><em>Transformations</em>" data-ar="تحولات<br><em>حقيقية</em>">Gerçek<br><em>Dönüşümler</em></h2>
+    <p style="color:var(--white-dim);font-size:13px;margin-top:16px;" data-tr="Hastalarımızın gülüş dönüşümlerini keşfedin" data-en="Discover our patients smile transformations" data-ar="اكتشف تحولات ابتسامة مرضانا">Hastalarımızın gülüş dönüşümlerini keşfedin</p>
+  </div>
+  <div class="before-after-grid">
+    <div class="reveal">
+      <div class="slider-container" style="height:300px;" data-slider>
+        <div class="slider-before">ÖNCE</div>
+        <div class="slider-after">SONRA</div>
+        <div class="slider-handle"></div>
+      </div>
+      <p style="margin-top:16px;font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;" data-tr="İmplant Tedavisi" data-en="Implant Treatment" data-ar="علاج الغرسات">İmplant Tedavisi</p>
+    </div>
+    <div class="reveal">
+      <div class="slider-container" style="height:300px;" data-slider>
+        <div class="slider-before">ÖNCE</div>
+        <div class="slider-after">SONRA</div>
+        <div class="slider-handle"></div>
+      </div>
+      <p style="margin-top:16px;font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;" data-tr="Zirkonyum Kaplama" data-en="Zirconium Crown" data-ar="تيجان الزركونيا">Zirkonyum Kaplama</p>
+    </div>
+    <div class="reveal">
+      <div class="slider-container" style="height:300px;" data-slider>
+        <div class="slider-before">ÖNCE</div>
+        <div class="slider-after">SONRA</div>
+        <div class="slider-handle"></div>
+      </div>
+      <p style="margin-top:16px;font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;" data-tr="Hollywood Gülüşü" data-en="Hollywood Smile" data-ar="ابتسامة هوليوود">Hollywood Gülüşü</p>
+    </div>
+  </div>
+</section>
+
 <section id="faq" style="padding:120px 60px;">
   <div class="reveal" style="max-width:800px; margin:0 auto;">
     <div class="section-label" data-tr="Sık Sorulan Sorular" data-en="FAQ" data-ar="الأسئلة الشائعة">Sık Sorulan Sorular</div>
@@ -1589,6 +1630,29 @@
       answer.style.maxHeight = answer.scrollHeight + 'px';
     }
   }
+
+  document.querySelectorAll('[data-slider]').forEach(slider => {
+    const after = slider.querySelector('.slider-after');
+    const handle = slider.querySelector('.slider-handle');
+    let dragging = false;
+    slider.addEventListener('mousedown', () => dragging = true);
+    window.addEventListener('mouseup', () => dragging = false);
+    slider.addEventListener('mousemove', e => {
+      if (!dragging) return;
+      const rect = slider.getBoundingClientRect();
+      const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+      const pct = (x / rect.width) * 100;
+      after.style.clipPath = 'inset(0 ' + (100-pct) + '% 0 0)';
+      handle.style.left = pct + '%';
+    });
+    slider.addEventListener('touchmove', e => {
+      const rect = slider.getBoundingClientRect();
+      const x = Math.max(0, Math.min(e.touches[0].clientX - rect.left, rect.width));
+      const pct = (x / rect.width) * 100;
+      after.style.clipPath = 'inset(0 ' + (100-pct) + '% 0 0)';
+      handle.style.left = pct + '%';
+    });
+  });
 
   function animateCounter(el, target, duration) {
     let start = 0;
