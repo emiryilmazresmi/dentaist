@@ -1068,6 +1068,13 @@
     font-size: 28px;
     cursor: pointer;
   }
+  .faq-item { border-bottom: 1px solid rgba(201,168,76,0.15); }
+  .faq-question { padding: 24px 0; display:flex; justify-content:space-between; align-items:center; cursor:pointer; font-size:14px; color:var(--white); letter-spacing:0.5px; }
+  .faq-question:hover { color:var(--gold); }
+  .faq-icon { color:var(--gold); font-size:20px; transition:transform 0.3s; flex-shrink:0; }
+  .faq-item.open .faq-icon { transform:rotate(45deg); }
+  .faq-answer { max-height:0; overflow:hidden; transition:max-height 0.4s ease; }
+  .faq-answer p { padding-bottom:24px; font-size:13px; color:var(--white-dim); line-height:1.8; }
 </style>
 </head>
 <body>
@@ -1388,6 +1395,49 @@
   </div>
 </section>
 
+<!-- FAQ -->
+<section id="faq" style="padding:120px 60px;">
+  <div class="reveal" style="max-width:800px; margin:0 auto;">
+    <div class="section-label" data-tr="Sık Sorulan Sorular" data-en="FAQ" data-ar="الأسئلة الشائعة">Sık Sorulan Sorular</div>
+    <h2 class="section-title" style="margin-bottom:48px;" data-tr="Aklınızdaki<br><em>Sorular</em>" data-en="Your<br><em>Questions</em>" data-ar="أسئلتك<br><em>المعتادة</em>">Aklınızdaki<br><em>Sorular</em></h2>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span data-tr="Tedavi için kaç gün İstanbul'da kalmam gerekiyor?" data-en="How many days do I need to stay in Istanbul for treatment?" data-ar="كم يوماً أحتاج للبقاء في إسطنبول للعلاج؟">Tedavi için kaç gün İstanbul'da kalmam gerekiyor?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-answer"><p data-tr="İmplant tedavisi için genellikle 3-5 gün yeterlidir. Zirkonyum ve lamina kaplamalar için 5-7 gün öneriyoruz. All-on-4 için 7-10 gün planlamanızı tavsiye ederiz." data-en="3-5 days is usually sufficient for implant treatment. We recommend 5-7 days for zirconium and laminate veneers. We advise planning 7-10 days for All-on-4." data-ar="3-5 أيام عادةً كافية لعلاج الغرسات. نوصي بـ 5-7 أيام لقشور الزركونيا واللامينات. ننصح بتخطيط 7-10 أيام لأول أون 4.">İmplant tedavisi için genellikle 3-5 gün yeterlidir. Zirkonyum ve lamina kaplamalar için 5-7 gün öneriyoruz. All-on-4 için 7-10 gün planlamanızı tavsiye ederiz.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span data-tr="Uçak bileti ve konaklama konusunda yardımcı olur musunuz?" data-en="Can you help with flights and accommodation?" data-ar="هل يمكنكم المساعدة في الرحلات والإقامة؟">Uçak bileti ve konaklama konusunda yardımcı olur musunuz?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-answer"><p data-tr="Evet! Uluslararası hastalarımıza transfer, konaklama ve tercümanlık hizmetleri konusunda destek sağlıyoruz. Tedavinizi keyifli bir İstanbul seyahatiyle birleştirebilirsiniz." data-en="Yes! We provide support with transfer, accommodation and interpreter services for our international patients. You can combine your treatment with a pleasant Istanbul trip." data-ar="نعم! نوفر الدعم في خدمات النقل والإقامة والترجمة لمرضانا الدوليين. يمكنك الجمع بين علاجك ورحلة ممتعة إلى إسطنبول.">Evet! Uluslararası hastalarımıza transfer, konaklama ve tercümanlık hizmetleri konusunda destek sağlıyoruz.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span data-tr="Tedavi garantisi veriyor musunuz?" data-en="Do you provide treatment guarantee?" data-ar="هل تقدمون ضمان علاج؟">Tedavi garantisi veriyor musunuz?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-answer"><p data-tr="Evet, tüm tedavilerimiz için yazılı garanti sunuyoruz. İmplantlar için 5 yıl, zirkonyum kaplamalar için 3 yıl garanti veriyoruz. Yurt dışında yaşayan hastalarımız için online takip hizmeti de sunuyoruz." data-en="Yes, we offer written guarantees for all our treatments. We provide 5 years for implants and 3 years for zirconium crowns. We also offer online follow-up service for our patients living abroad." data-ar="نعم، نقدم ضمانات مكتوبة لجميع علاجاتنا. نضمن 5 سنوات للغرسات و3 سنوات لتيجان الزركونيا.">Evet, tüm tedavilerimiz için yazılı garanti sunuyoruz. İmplantlar için 5 yıl, zirkonyum kaplamalar için 3 yıl garanti veriyoruz.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span data-tr="Hangi ödeme yöntemlerini kabul ediyorsunuz?" data-en="What payment methods do you accept?" data-ar="ما طرق الدفع التي تقبلونها؟">Hangi ödeme yöntemlerini kabul ediyorsunuz?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-answer"><p data-tr="Nakit (TL, EUR, USD, GBP), kredi kartı ve banka havalesi kabul ediyoruz. Uluslararası hastalarımız için taksit seçenekleri de mevcuttur." data-en="We accept cash (TL, EUR, USD, GBP), credit card and bank transfer. Installment options are also available for our international patients." data-ar="نقبل النقد (ليرة تركية، يورو، دولار، جنيه إسترليني) وبطاقة الائتمان والتحويل البنكي.">Nakit (TL, EUR, USD, GBP), kredi kartı ve banka havalesi kabul ediyoruz.</p></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        <span data-tr="Konsültasyon ücretsiz mi?" data-en="Is the consultation free?" data-ar="هل الاستشارة مجانية؟">Konsültasyon ücretsiz mi?</span>
+        <span class="faq-icon">+</span>
+      </div>
+      <div class="faq-answer"><p data-tr="Evet, ilk konsültasyonumuz tamamen ücretsizdir. Online veya klinikte muayene seçeneklerimiz mevcuttur. Fotoğraf göndererek online ön değerlendirme de yaptırabilirsiniz." data-en="Yes, our first consultation is completely free. We have online or in-clinic examination options. You can also send photos for an online pre-assessment." data-ar="نعم، استشارتنا الأولى مجانية تماماً. لدينا خيارات الفحص عبر الإنترنت أو في العيادة.">Evet, ilk konsültasyonumuz tamamen ücretsizdir.</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact" style="background: var(--dark-2);">
   <div class="contact-info reveal">
@@ -1520,6 +1570,20 @@
       if (target) target.scrollIntoView({ behavior: 'smooth' });
     });
   });
+
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    const answer = item.querySelector('.faq-answer');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-answer').style.maxHeight = '0';
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  }
 </script>
 </body>
 </html>
