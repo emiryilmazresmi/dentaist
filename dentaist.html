@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dentaist Avcılar - İmplant ve Estetik Diş Merkezi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dark: #8B6914;
+    --dark: #0A0A0A;
+    --dark-2: #111111;
+    --dark-3: #1A1A1A;
+    --dark-4: #242424;
+    --white: #F5F0E8;
+    --white-dim: rgba(245,240,232,0.7);
+    --white-faint: rgba(245,240,232,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  body.rtl { direction: rtl; font-family: 'Noto Naskh Arabic', 'Montserrat', sans-serif; }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    padding: 24px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.4s ease;
+  }
+
+  nav.scrolled {
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(20px);
+    padding: 16px 60px;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    color: var(--white);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .logo span { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--white-dim);
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  .lang-switcher {
+    display: flex;
+    gap: 8px;
+  }
+
+  .lang-btn {
+    background: none;
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--white-dim);
+    font-size: 10px;
+    letter-spacing: 1px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .lang-btn:hover, .lang-btn.active {
+    background: var(--gold);
+    color: var(--dark);
+    border-color: var(--gold);
+  }
+
+  /* HERO */
+  #hero {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(201,168,76,0.05) 0%, transparent 50%),
+      linear-gradient(135deg, #0A0A0A 0%, #111111 50%, #0D0D0D 100%);
+  }
+
+  .hero-lines {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(201,168,76,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.05) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 60px;
+    max-width: 750px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(201,168,76,0.4);
+    padding: 8px 20px;
+    margin-bottom: 32px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    animation: fadeInUp 0.8s ease forwards;
+    opacity: 0;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.5); }
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 7vw, 90px);
+    font-weight: 300;
+    line-height: 1.05;
+    margin-bottom: 28px;
+    animation: fadeInUp 0.8s 0.2s ease forwards;
+    opacity: 0;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-subtitle {
+    font-size: 13px;
+    letter-spacing: 1px;
+    line-height: 1.8;
+    color: var(--white-dim);
+    max-width: 480px;
+    margin-bottom: 48px;
+    animation: fadeInUp 0.8s 0.4s ease forwards;
+    opacity: 0;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 20px;
+    animation: fadeInUp 0.8s 0.6s ease forwards;
+    opacity: 0;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--dark);
+    padding: 16px 36px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px rgba(201,168,76,0.3);
+  }
+
+  .btn-outline {
+    border: 1px solid rgba(201,168,76,0.5);
+    color: var(--gold);
+    padding: 16px 36px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .btn-outline:hover {
+    background: rgba(201,168,76,0.1);
+    border-color: var(--gold);
+  }
+
+  .hero-stats {
+    position: absolute;
+    right: 60px;
+    bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    z-index: 2;
+    animation: fadeInRight 0.8s 0.8s ease forwards;
+    opacity: 0;
+  }
+
+  .stat-item {
+    text-align: right;
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 600;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white-dim);
+    margin-top: 4px;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 60px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--white-dim);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    z-index: 2;
+  }
+
+  .scroll-line {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    animation: scrollLine 2s infinite;
+  }
+
+  @keyframes scrollLine {
+    0% { width: 20px; opacity: 0; }
+    50% { width: 60px; opacity: 1; }
+    100% { width: 20px; opacity: 0; }
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* SECTIONS */
+  section { padding: 120px 60px; }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(38px, 5vw, 60px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  /* SERVICES */
+  #services { background: var(--dark-2); }
+
+  .services-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 80px;
+  }
+
+  .services-header p {
+    max-width: 380px;
+    color: var(--white-dim);
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .service-card {
+    background: var(--dark-3);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    cursor: pointer;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .service-card:hover::before { transform: scaleX(1); }
+
+  .service-card:hover {
+    background: var(--dark-4);
+    transform: translateY(-4px);
+  }
+
+  .service-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 600;
+    color: rgba(201,168,76,0.1);
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    line-height: 1;
+    transition: color 0.4s;
+  }
+
+  .service-card:hover .service-number { color: rgba(201,168,76,0.2); }
+
+  .service-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 24px;
+    color: var(--gold);
+  }
+
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 12px;
+    color: var(--white);
+  }
+
+  .service-desc {
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--white-dim);
+  }
+
+  /* ABOUT */
+  #about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+
+  .about-visual {
+    position: relative;
+    height: 600px;
+  }
+
+  .about-img-main {
+    width: 75%;
+    height: 80%;
+    background: var(--dark-3);
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    border: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .about-img-accent {
+    width: 50%;
+    height: 45%;
+    background: var(--dark-4);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border: 1px solid rgba(201,168,76,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .accent-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 600;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .accent-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white-dim);
+    text-align: center;
+  }
+
+  .img-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--dark-3), var(--dark-4));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(201,168,76,0.3);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    letter-spacing: 3px;
+  }
+
+  .about-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .feature-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .feature-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+
+  .feature-text {
+    font-size: 12px;
+    color: var(--white-dim);
+    line-height: 1.6;
+  }
+
+  /* DOCTORS */
+  #doctors { background: var(--dark-2); }
+
+  .doctors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 60px;
+  }
+
+  .doctor-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .doctor-photo {
+    height: 380px;
+    background: linear-gradient(135deg, var(--dark-3), var(--dark-4));
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .doctor-photo::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(to top, rgba(10,10,10,0.8), transparent);
+  }
+
+  .doctor-photo-placeholder {
+    color: rgba(201,168,76,0.2);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    font-weight: 300;
+  }
+
+  .doctor-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 6px;
+  }
+
+  .doctor-title {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  /* GALLERY */
+  #gallery { }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+    gap: 4px;
+    margin-top: 60px;
+  }
+
+  .gallery-item {
+    background: var(--dark-3);
+    border: 1px solid rgba(201,168,76,0.08);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.4s;
+  }
+
+  .gallery-item:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .gallery-item:hover { border-color: rgba(201,168,76,0.3); }
+
+  .gallery-thumb {
+    width: 100%;
+    padding-bottom: 100%;
+    background: linear-gradient(135deg, var(--dark-3), var(--dark-4));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .gallery-item:first-child .gallery-thumb { padding-bottom: 50%; }
+
+  .gallery-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgba(201,168,76,0.3);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(201,168,76,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .gallery-item:hover .gallery-overlay { opacity: 1; }
+
+  /* TESTIMONIALS */
+  #testimonials { background: var(--dark-2); }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 60px;
+  }
+
+  .testimonial-card {
+    background: var(--dark-3);
+    padding: 48px 40px;
+    position: relative;
+  }
+
+  .testimonial-stars {
+    color: var(--gold);
+    font-size: 14px;
+    letter-spacing: 4px;
+    margin-bottom: 24px;
+  }
+
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--white-dim);
+    margin-bottom: 32px;
+  }
+
+  .testimonial-author {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .testimonial-quote {
+    position: absolute;
+    top: 24px;
+    right: 32px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 80px;
+    color: rgba(201,168,76,0.08);
+    line-height: 1;
+  }
+
+  /* CONTACT */
+  #contact {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: start;
+  }
+
+  .contact-info { padding-top: 20px; }
+
+  .contact-detail {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .contact-detail:last-of-type { border-bottom: none; }
+
+  .contact-icon {
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(201,168,76,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+
+  .contact-detail-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+
+  .contact-detail-value {
+    font-size: 14px;
+    color: var(--white);
+    line-height: 1.6;
+  }
+
+  .contact-form { }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: var(--dark-3);
+    border: 1px solid rgba(201,168,76,0.2);
+    color: var(--white);
+    padding: 14px 18px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.3s;
+    appearance: none;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--gold);
+  }
+
+  .form-group textarea { height: 120px; resize: none; }
+
+  .form-group select option { background: var(--dark-3); }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark-2);
+    padding: 60px;
+    border-top: 1px solid rgba(201,168,76,0.1);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
+  .footer-logo span { color: var(--gold); }
+
+  .footer-copy {
+    font-size: 11px;
+    color: rgba(201,168,76,0.4);
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 16px;
+    justify-content: flex-end;
+  }
+
+  .social-link {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(201,168,76,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    text-decoration: none;
+    transition: all 0.3s;
+    font-size: 14px;
+  }
+
+  .social-link:hover {
+    background: var(--gold);
+    color: var(--dark);
+    border-color: var(--gold);
+  }
+
+  /* WHATSAPP FLOAT */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 56px;
+    height: 56px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 998;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    transition: all 0.3s;
+    font-size: 24px;
+  }
+
+  .whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(37,211,102,0.5);
+  }
+
+  /* GOLD DIVIDER */
+  .gold-divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    margin: 24px 0;
+  }
+
+  /* MOBILE */
+  @media (max-width: 1024px) {
+    nav { padding: 20px 30px; }
+    nav.scrolled { padding: 14px 30px; }
+    .nav-links { display: none; }
+    section { padding: 80px 30px; }
+    .hero-content { padding: 0 30px; }
+    .hero-stats { right: 30px; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    #about { grid-template-columns: 1fr; gap: 60px; }
+    .about-visual { height: 400px; }
+    .doctors-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item:first-child { grid-column: span 2; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    #contact { grid-template-columns: 1fr; gap: 60px; }
+    footer { grid-template-columns: 1fr; text-align: center; }
+    .footer-social { justify-content: center; }
+  }
+
+  @media (max-width: 640px) {
+    .hero-title { font-size: 40px; }
+    .hero-cta { flex-direction: column; }
+    .hero-stats { display: none; }
+    .services-grid { grid-template-columns: 1fr; }
+    .doctors-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .gallery-item:first-child { grid-column: span 1; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* MOBILE MENU */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  @media (max-width: 1024px) {
+    .hamburger { display: flex; }
+  }
+
+  .hamburger span {
+    width: 24px;
+    height: 1px;
+    background: var(--gold);
+    transition: all 0.3s;
+  }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(10,10,10,0.98);
+    z-index: 997;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+  }
+
+  .mobile-menu.open { display: flex; }
+
+  .mobile-menu a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .mobile-menu a:hover { color: var(--gold); }
+
+  .mobile-close {
+    position: absolute;
+    top: 24px;
+    right: 30px;
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-size: 28px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="logo">Dent<span>aist</span></a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#services" data-tr="Hizmetler" data-en="Services" data-ar="الخدمات">Hizmetler</a></li>
+    <li><a href="#about" data-tr="Hakkımızda" data-en="About" data-ar="عنا">Hakkımızda</a></li>
+    <li><a href="#doctors" data-tr="Doktorlarımız" data-en="Doctors" data-ar="أطباؤنا">Doktorlarımız</a></li>
+    <li><a href="#gallery" data-tr="Galeri" data-en="Gallery" data-ar="المعرض">Galeri</a></li>
+    <li><a href="#contact" data-tr="İletişim" data-en="Contact" data-ar="اتصل بنا">İletişim</a></li>
+  </ul>
+  <div style="display:flex; align-items:center; gap:16px;">
+    <div class="lang-switcher">
+      <button class="lang-btn active" onclick="setLang('tr')">TR</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" onclick="setLang('ar')">AR</button>
+    </div>
+    <div class="hamburger" onclick="toggleMobile()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="toggleMobile()">✕</button>
+  <a href="#services" onclick="toggleMobile()" data-tr="Hizmetler" data-en="Services" data-ar="الخدمات">Hizmetler</a>
+  <a href="#about" onclick="toggleMobile()" data-tr="Hakkımızda" data-en="About" data-ar="عنا">Hakkımızda</a>
+  <a href="#doctors" onclick="toggleMobile()" data-tr="Doktorlarımız" data-en="Doctors" data-ar="أطباؤنا">Doktorlarımız</a>
+  <a href="#gallery" onclick="toggleMobile()" data-tr="Galeri" data-en="Gallery" data-ar="المعرض">Galeri</a>
+  <a href="#contact" onclick="toggleMobile()" data-tr="İletişim" data-en="Contact" data-ar="اتصل بنا">İletişim</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span data-tr="Avcılar'ın En İyi Diş Kliniği" data-en="Avcılar's Premium Dental Clinic" data-ar="أفضل عيادة أسنان في أفجيلار">Avcılar'ın En İyi Diş Kliniği</span>
+    </div>
+    <h1 class="hero-title">
+      <span data-tr="Mükemmel<br><em>Gülüşünüz</em><br>Burada Başlıyor" data-en="Your Perfect<br><em>Smile</em><br>Starts Here" data-ar="ابتسامتك<br><em>المثالية</em><br>تبدأ هنا">Mükemmel<br><em>Gülüşünüz</em><br>Burada Başlıyor</span>
+    </h1>
+    <p class="hero-subtitle" data-tr="İmplant, estetik diş hekimliği ve gülüş tasarımında Avcılar'ın lider kliniği. Uzman hekimlerimiz ve son teknoloji ekipmanlarımızla hayalinizdeki gülüşe kavuşun." data-en="Avcılar's leading clinic in implants, cosmetic dentistry, and smile design. Achieve the smile of your dreams with our expert doctors and state-of-the-art equipment." data-ar="عيادة أفجيلار الرائدة في زراعة الأسنان وطب الأسنان التجميلي وتصميم الابتسامة. احصل على ابتسامة أحلامك مع أطبائنا الخبراء وأحدث المعدات.">İmplant, estetik diş hekimliği ve gülüş tasarımında Avcılar'ın lider kliniği. Uzman hekimlerimiz ve son teknoloji ekipmanlarımızla hayalinizdeki gülüşe kavuşun.</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary" data-tr="Randevu Al" data-en="Book Appointment" data-ar="احجز موعداً">Randevu Al</a>
+      <a href="#services" class="btn-outline" data-tr="Hizmetlerimiz" data-en="Our Services" data-ar="خدماتنا">Hizmetlerimiz</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-number">5.0</div>
+      <div class="stat-label" data-tr="Google Puanı" data-en="Google Rating" data-ar="تقييم جوجل">Google Puanı</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">66+</div>
+      <div class="stat-label" data-tr="Mutlu Hasta" data-en="Happy Patients" data-ar="مريض سعيد">Mutlu Hasta</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">10+</div>
+      <div class="stat-label" data-tr="Yıl Deneyim" data-en="Years Experience" data-ar="سنوات خبرة">Yıl Deneyim</div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span data-tr="Keşfet" data-en="Scroll" data-ar="استكشف">Keşfet</span>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header reveal">
+    <div>
+      <div class="section-label" data-tr="Hizmetlerimiz" data-en="Our Services" data-ar="خدماتنا">Hizmetlerimiz</div>
+      <h2 class="section-title" data-tr="Kapsamlı Diş<br><em>Sağlığı Çözümleri</em>" data-en="Comprehensive Dental<br><em>Health Solutions</em>" data-ar="حلول صحة<br><em>الأسنان الشاملة</em>">Kapsamlı Diş<br><em>Sağlığı Çözümleri</em></h2>
+    </div>
+    <p data-tr="Modern teknoloji ve uzman kadromuzla diş sağlığınız için en iyi tedavi seçeneklerini sunuyoruz." data-en="We offer the best treatment options for your dental health with modern technology and expert staff." data-ar="نقدم أفضل خيارات العلاج لصحة أسنانك بالتكنولوجيا الحديثة وكادرنا المتخصص.">Modern teknoloji ve uzman kadromuzla diş sağlığınız için en iyi tedavi seçeneklerini sunuyoruz.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-number">01</div>
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="24" cy="20" r="10"/>
+        <path d="M14 38c0-5.5 4.5-10 10-10s10 4.5 10 10"/>
+        <path d="M24 10V6M20 12l-3-3M28 12l3-3"/>
+      </svg>
+      <div class="service-name" data-tr="Diş İmplantı" data-en="Dental Implant" data-ar="زراعة الأسنان">Diş İmplantı</div>
+      <p class="service-desc" data-tr="Titanium implantlarla kalıcı, doğal görünümlü diş çözümleri. Tek diş, köprü veya tam protez seçenekleri." data-en="Permanent, natural-looking dental solutions with titanium implants. Single tooth, bridge or full denture options." data-ar="حلول أسنان دائمة وطبيعية المظهر مع غرسات التيتانيوم. خيارات السن الواحد أو الجسر أو الطقم الكامل.">Titanium implantlarla kalıcı, doğal görünümlü diş çözümleri. Tek diş, köprü veya tam protez seçenekleri.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">02</div>
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M12 36l6-6 4 4 8-12 6 6"/>
+        <rect x="6" y="8" width="36" height="28" rx="2"/>
+      </svg>
+      <div class="service-name" data-tr="Gülüş Tasarımı" data-en="Smile Design" data-ar="تصميم الابتسامة">Gülüş Tasarımı</div>
+      <p class="service-desc" data-tr="Dijital tasarım teknolojisiyle kişiselleştirilmiş gülüş planlaması. Tedavi öncesi 3D önizleme imkânı." data-en="Personalized smile planning with digital design technology. 3D preview before treatment." data-ar="تخطيط الابتسامة المخصص بتقنية التصميم الرقمي. معاينة ثلاثية الأبعاد قبل العلاج.">Dijital tasarım teknolojisiyle kişiselleştirilmiş gülüş planlaması. Tedavi öncesi 3D önizleme imkânı.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">03</div>
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M24 8c-6 0-10 4-10 10 0 4 2 7 5 9v6h10v-6c3-2 5-5 5-9 0-6-4-10-10-10z"/>
+        <path d="M19 33v4h10v-4"/>
+      </svg>
+      <div class="service-name" data-tr="Zirkonyum Kaplama" data-en="Zirconium Crown" data-ar="تيجان الزركونيا">Zirkonyum Kaplama</div>
+      <p class="service-desc" data-tr="Yüksek estetik ve dayanıklılık sunan zirkonyum porselen kaplamalar. Doğal diş görünümü." data-en="Zirconium porcelain veneers offering high aesthetics and durability. Natural tooth appearance." data-ar="قشور البورسلين الزركوني التي تقدم جماليات وإتقانًا عاليين. مظهر طبيعي للأسنان.">Yüksek estetik ve dayanıklılık sunan zirkonyum porselen kaplamalar. Doğal diş görünümü.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">04</div>
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M8 24c0-8.8 7.2-16 16-16s16 7.2 16 16"/>
+        <path d="M16 24h16M24 16v16"/>
+        <circle cx="24" cy="24" r="4" fill="currentColor" opacity="0.3"/>
+      </svg>
+      <div class="service-name" data-tr="Lamina Kaplama" data-en="Porcelain Veneers" data-ar="قشور البورسلين">Lamina Kaplama</div>
+      <p class="service-desc" data-tr="İnce seramik laminalarla kusursuz gülüş estetiği. Minimal invaziv uygulama, maksimum güzellik." data-en="Flawless smile aesthetics with thin ceramic laminates. Minimally invasive, maximum beauty." data-ar="جماليات ابتسامة لا تشوبها شائبة مع الطلاءات السيراميكية الرقيقة. تطبيق غير جراحي، جمال أقصى.">İnce seramik laminalarla kusursuz gülüş estetiği. Minimal invaziv uygulama, maksimum güzellik.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">05</div>
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M12 12l4 24h16l4-24"/>
+        <path d="M8 12h32M20 12V8h8v4"/>
+        <path d="M20 20l2 12M24 20v12M28 20l-2 12"/>
+      </svg>
+      <div class="service-name" data-tr="All-on-4 / All-on-6" data-en="All-on-4 / All-on-6" data-ar="أول أون 4 / أول أون 6">All-on-4 / All-on-6</div>
+      <p class="service-desc" data-tr="Tüm dişsiz hastalar için tek seansta sabit tam protez çözümü. Aynı gün yeni dişlerinize kavuşun." data-en="Fixed full denture solution in a single session for completely edentulous patients. Get your new teeth the same day." data-ar="حل طقم أسنان ثابت كامل في جلسة واحدة لمرضى انعدام الأسنان الكامل. احصل على أسنانك الجديدة في نفس اليوم.">Tüm dişsiz hastalar için tek seansta sabit tam protez çözümü. Aynı gün yeni dişlerinize kavuşun.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-number">06</div>
+      <svg class="service-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M24 8l3 9h9l-7.5 5.5 3 9L24 26l-7.5 5.5 3-9L12 17h9z"/>
+      </svg>
+      <div class="service-name" data-tr="Hollywood Gülüşü" data-en="Hollywood Smile" data-ar="ابتسامة هوليوود">Hollywood Gülüşü</div>
+      <p class="service-desc" data-tr="Kombine estetik tedavilerle mükemmel Hollywood gülüşü. Beyazlatma, laminalar ve gülüş tasarımı bir arada." data-en="Perfect Hollywood smile with combined cosmetic treatments. Whitening, veneers and smile design combined." data-ar="ابتسامة هوليوود المثالية مع العلاجات التجميلية المجمعة. التبييض والقشور وتصميم الابتسامة معًا.">Kombine estetik tedavilerle mükemmel Hollywood gülüşü. Beyazlatma, laminalar ve gülüş tasarımı bir arada.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual reveal">
+    <div class="about-img-main">
+      <div class="img-placeholder">KLİNİK FOTOĞRAF</div>
+    </div>
+    <div class="about-img-accent">
+      <div class="accent-number">5.0</div>
+      <div class="accent-label" data-tr="Google Yorumları" data-en="Google Reviews" data-ar="تقييمات جوجل">Google Yorumları</div>
+    </div>
+  </div>
+  <div class="about-content reveal">
+    <div class="section-label" data-tr="Hakkımızda" data-en="About Us" data-ar="عنا">Hakkımızda</div>
+    <h2 class="section-title" data-tr="Neden<br><em>Dentaist?</em>" data-en="Why<br><em>Dentaist?</em>" data-ar="لماذا<br><em>دنتايست؟</em>">Neden<br><em>Dentaist?</em></h2>
+    <div class="gold-divider"></div>
+    <p style="color:var(--white-dim); font-size:13px; line-height:1.9; margin-bottom:24px;"
+       data-tr="Dentaist Avcılar olarak, hastalarımıza en yüksek kalitede diş sağlığı hizmeti sunmayı misyon edinmiş bir ekibiz. Modern teknoloji, uzman hekimler ve kişiselleştirilmiş tedavi yaklaşımıyla fark yaratıyoruz."
+       data-en="As Dentaist Avcılar, we are a team dedicated to providing our patients with the highest quality dental care. We make a difference with modern technology, expert doctors and personalized treatment approach."
+       data-ar="كعيادة دنتايست أفجيلار، نحن فريق ملتزم بتقديم أعلى جودة من رعاية الأسنان لمرضانا. نحدث فرقًا بالتكنولوجيا الحديثة والأطباء الخبراء ونهج العلاج الشخصي.">
+      Dentaist Avcılar olarak, hastalarımıza en yüksek kalitede diş sağlığı hizmeti sunmayı misyon edinmiş bir ekibiz. Modern teknoloji, uzman hekimler ve kişiselleştirilmiş tedavi yaklaşımıyla fark yaratıyoruz.
+    </p>
+    <div class="about-features">
+      <div class="feature-item">
+        <div class="feature-dot"></div>
+        <span class="feature-text" data-tr="Son teknoloji dijital röntgen" data-en="State-of-the-art digital X-ray" data-ar="أشعة رقمية بأحدث التقنيات">Son teknoloji dijital röntgen</span>
+      </div>
+      <div class="feature-item">
+        <div class="feature-dot"></div>
+        <span class="feature-text" data-tr="3D implant planlama" data-en="3D implant planning" data-ar="تخطيط الغرسات ثلاثي الأبعاد">3D implant planlama</span>
+      </div>
+      <div class="feature-item">
+        <div class="feature-dot"></div>
+        <span class="feature-text" data-tr="Uzman hekim kadrosu" data-en="Expert medical staff" data-ar="كادر طبي متخصص">Uzman hekim kadrosu</span>
+      </div>
+      <div class="feature-item">
+        <div class="feature-dot"></div>
+        <span class="feature-text" data-tr="Steril klinik ortamı" data-en="Sterile clinical environment" data-ar="بيئة سريرية معقمة">Steril klinik ortamı</span>
+      </div>
+      <div class="feature-item">
+        <div class="feature-dot"></div>
+        <span class="feature-text" data-tr="Ücretsiz konsültasyon" data-en="Free consultation" data-ar="استشارة مجانية">Ücretsiz konsültasyon</span>
+      </div>
+      <div class="feature-item">
+        <div class="feature-dot"></div>
+        <span class="feature-text" data-tr="Tedavi garantisi" data-en="Treatment guarantee" data-ar="ضمان العلاج">Tedavi garantisi</span>
+      </div>
+    </div>
+    <div style="margin-top:40px;">
+      <a href="#contact" class="btn-primary" data-tr="Randevu Al" data-en="Book Appointment" data-ar="احجز موعداً">Randevu Al</a>
+    </div>
+  </div>
+</section>
+
+<!-- DOCTORS -->
+<section id="doctors">
+  <div class="reveal" style="text-align:center; margin-bottom:0;">
+    <div class="section-label" style="justify-content:center;" data-tr="Uzman Kadromuz" data-en="Our Expert Team" data-ar="فريقنا المتخصص">Uzman Kadromuz</div>
+    <h2 class="section-title" data-tr="Doktorlarımızla<br><em>Tanışın</em>" data-en="Meet Our<br><em>Doctors</em>" data-ar="تعرف على<br><em>أطبائنا</em>">Doktorlarımızla<br><em>Tanışın</em></h2>
+  </div>
+  <div class="doctors-grid">
+    <div class="doctor-card reveal">
+      <div class="doctor-photo">
+        <div class="doctor-photo-placeholder">Dr</div>
+      </div>
+      <div class="doctor-name" data-tr="Dr. [İsim Eklenecek]" data-en="Dr. [Name to be Added]" data-ar="د. [سيضاف الاسم]">Dr. [İsim Eklenecek]</div>
+      <div class="doctor-title" data-tr="İmplant Uzmanı" data-en="Implant Specialist" data-ar="أخصائي زراعة الأسنان">İmplant Uzmanı</div>
+    </div>
+    <div class="doctor-card reveal">
+      <div class="doctor-photo">
+        <div class="doctor-photo-placeholder">Dr</div>
+      </div>
+      <div class="doctor-name" data-tr="Dr. [İsim Eklenecek]" data-en="Dr. [Name to be Added]" data-ar="د. [سيضاف الاسم]">Dr. [İsim Eklenecek]</div>
+      <div class="doctor-title" data-tr="Estetik Diş Uzmanı" data-en="Cosmetic Dentist" data-ar="طبيب أسنان تجميلي">Estetik Diş Uzmanı</div>
+    </div>
+    <div class="doctor-card reveal">
+      <div class="doctor-photo">
+        <div class="doctor-photo-placeholder">Dr</div>
+      </div>
+      <div class="doctor-name" data-tr="Dr. [İsim Eklenecek]" data-en="Dr. [Name to be Added]" data-ar="د. [سيضاف الاسم]">Dr. [İsim Eklenecek]</div>
+      <div class="doctor-title" data-tr="Ortodonti Uzmanı" data-en="Orthodontics Specialist" data-ar="أخصائي تقويم الأسنان">Ortodonti Uzmanı</div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" style="background: var(--dark-2);">
+  <div class="reveal">
+    <div class="section-label" data-tr="Önce & Sonra" data-en="Before & After" data-ar="قبل وبعد">Önce & Sonra</div>
+    <h2 class="section-title" data-tr="Gerçek<br><em>Dönüşümler</em>" data-en="Real<br><em>Transformations</em>" data-ar="تحولات<br><em>حقيقية</em>">Gerçek<br><em>Dönüşümler</em></h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item reveal">
+      <div class="gallery-thumb">
+        <div class="gallery-label">FOTOĞRAF EKLENECEK<br>Before / After</div>
+      </div>
+      <div class="gallery-overlay" data-tr="Detayları Gör" data-en="View Details" data-ar="عرض التفاصيل">Detayları Gör</div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-thumb">
+        <div class="gallery-label">FOTOĞRAF</div>
+      </div>
+      <div class="gallery-overlay" data-tr="Detayları Gör" data-en="View Details" data-ar="عرض التفاصيل">Detayları Gör</div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-thumb">
+        <div class="gallery-label">FOTOĞRAF</div>
+      </div>
+      <div class="gallery-overlay" data-tr="Detayları Gör" data-en="View Details" data-ar="عرض التفاصيل">Detayları Gör</div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-thumb">
+        <div class="gallery-label">FOTOĞRAF</div>
+      </div>
+      <div class="gallery-overlay" data-tr="Detayları Gör" data-en="View Details" data-ar="عرض التفاصيل">Detayları Gör</div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-thumb">
+        <div class="gallery-label">FOTOĞRAF</div>
+      </div>
+      <div class="gallery-overlay" data-tr="Detayları Gör" data-en="View Details" data-ar="عرض التفاصيل">Detayları Gör</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="reveal" style="text-align:center;">
+    <div class="section-label" style="justify-content:center;" data-tr="Hasta Yorumları" data-en="Patient Reviews" data-ar="تقييمات المرضى">Hasta Yorumları</div>
+    <h2 class="section-title" data-tr="Hastalarımız<br><em>Ne Diyor?</em>" data-en="What Our Patients<br><em>Say?</em>" data-ar="ماذا يقول<br><em>مرضانا؟</em>">Hastalarımız<br><em>Ne Diyor?</em></h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="testimonial-quote">"</div>
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text" data-tr="İmplant tedavisinde çok memnun kaldım. Doktorlar çok ilgili ve profesyonel. Kliniğin temizliği ve modern ekipmanları da etkileyiciydi." data-en="I was very satisfied with the implant treatment. The doctors are very attentive and professional. The clinic's cleanliness and modern equipment were also impressive." data-ar="كنت راضيًا جدًا عن علاج الغرسات. الأطباء منتبهون جدًا ومحترفون. نظافة العيادة ومعداتها الحديثة كانت مثيرة للإعجاب أيضًا.">İmplant tedavisinde çok memnun kaldım. Doktorlar çok ilgili ve profesyonel. Kliniğin temizliği ve modern ekipmanları da etkileyiciydi.</p>
+      <div class="testimonial-author">Ahmet Y. — İmplant</div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="testimonial-quote">"</div>
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text" data-tr="Gülüş tasarımı için geldim ve sonuç hayal ettiğimden çok daha güzel oldu. Artık gülümsemekten çekinmiyorum. Teşekkürler Dentaist!" data-en="I came for smile design and the result was much more beautiful than I imagined. I no longer hesitate to smile. Thank you Dentaist!" data-ar="جئت لتصميم الابتسامة وكانت النتيجة أجمل بكثير مما تخيلت. لم أعد أتردد في الابتسام. شكرًا دنتايست!">Gülüş tasarımı için geldim ve sonuç hayal ettiğimden çok daha güzel oldu. Artık gülümsemekten çekinmiyorum. Teşekkürler Dentaist!</p>
+      <div class="testimonial-author">Fatma K. — Gülüş Tasarımı</div>
+    </div>
+    <div class="testimonial-card reveal">
+      <div class="testimonial-quote">"</div>
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text" data-tr="Zirkonyum kaplama yaptırdım, gerçekten doğal görünüyor. Hem fiyat hem kalite açısından en iyi kliniği buldum diyebilirim." data-en="I had zirconium veneers done, it really looks natural. I can say I found the best clinic in terms of both price and quality." data-ar="قمت بعمل قشور الزركونيا، تبدو طبيعية حقًا. يمكنني القول إنني وجدت أفضل عيادة من حيث السعر والجودة.">Zirkonyum kaplama yaptırdım, gerçekten doğal görünüyor. Hem fiyat hem kalite açısından en iyi kliniği buldum diyebilirim.</p>
+      <div class="testimonial-author">Mehmet A. — Zirkonyum</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background: var(--dark-2);">
+  <div class="contact-info reveal">
+    <div class="section-label" data-tr="İletişim" data-en="Contact" data-ar="اتصل بنا">İletişim</div>
+    <h2 class="section-title" data-tr="Randevu<br><em>Alın</em>" data-en="Book an<br><em>Appointment</em>" data-ar="احجز<br><em>موعداً</em>">Randevu<br><em>Alın</em></h2>
+    <div class="gold-divider"></div>
+
+    <div class="contact-detail">
+      <div class="contact-icon">📍</div>
+      <div>
+        <div class="contact-detail-label" data-tr="Adres" data-en="Address" data-ar="العنوان">Adres</div>
+        <div class="contact-detail-value">Avcılar, İstanbul</div>
+      </div>
+    </div>
+    <div class="contact-detail">
+      <div class="contact-icon">📞</div>
+      <div>
+        <div class="contact-detail-label" data-tr="Telefon" data-en="Phone" data-ar="الهاتف">Telefon</div>
+        <div class="contact-detail-value">+90 — — — — — —</div>
+      </div>
+    </div>
+    <div class="contact-detail">
+      <div class="contact-icon">⏰</div>
+      <div>
+        <div class="contact-detail-label" data-tr="Çalışma Saatleri" data-en="Working Hours" data-ar="ساعات العمل">Çalışma Saatleri</div>
+        <div class="contact-detail-value" data-tr="Pzt–Cmt: 09:00–19:00<br>Pazar: Kapalı" data-en="Mon–Sat: 09:00–19:00<br>Sunday: Closed" data-ar="الإثنين–السبت: 09:00–19:00<br>الأحد: مغلق">Pzt–Cmt: 09:00–19:00<br>Pazar: Kapalı</div>
+      </div>
+    </div>
+  </div>
+
+  <form class="contact-form reveal" action="https://formspree.io/f/FORM_ID" method="POST">
+    <div class="form-row">
+      <div class="form-group">
+        <label data-tr="Adınız" data-en="Your Name" data-ar="اسمك">Adınız</label>
+        <input type="text" name="name" required>
+      </div>
+      <div class="form-group">
+        <label data-tr="Telefonunuz" data-en="Your Phone" data-ar="هاتفك">Telefonunuz</label>
+        <input type="tel" name="phone" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label data-tr="E-posta" data-en="Email" data-ar="البريد الإلكتروني">E-posta</label>
+      <input type="email" name="email">
+    </div>
+    <div class="form-group">
+      <label data-tr="Hizmet Seçin" data-en="Select Service" data-ar="اختر الخدمة">Hizmet Seçin</label>
+      <select name="service">
+        <option data-tr="Diş İmplantı" data-en="Dental Implant" data-ar="زراعة الأسنان">Diş İmplantı</option>
+        <option data-tr="Gülüş Tasarımı" data-en="Smile Design" data-ar="تصميم الابتسامة">Gülüş Tasarımı</option>
+        <option data-tr="Zirkonyum Kaplama" data-en="Zirconium Crown" data-ar="تيجان الزركونيا">Zirkonyum Kaplama</option>
+        <option data-tr="Lamina Kaplama" data-en="Porcelain Veneers" data-ar="قشور البورسلين">Lamina Kaplama</option>
+        <option data-tr="All-on-4 / All-on-6" data-en="All-on-4 / All-on-6" data-ar="أول أون 4 / أول أون 6">All-on-4 / All-on-6</option>
+        <option data-tr="Hollywood Gülüşü" data-en="Hollywood Smile" data-ar="ابتسامة هوليوود">Hollywood Gülüşü</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label data-tr="Mesajınız" data-en="Your Message" data-ar="رسالتك">Mesajınız</label>
+      <textarea name="message"></textarea>
+    </div>
+    <button type="submit" class="btn-primary" style="width:100%; border:none; cursor:pointer;" data-tr="Randevu Talebi Gönder" data-en="Send Appointment Request" data-ar="إرسال طلب الموعد">Randevu Talebi Gönder</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Dent<span>aist</span></div>
+  <div class="footer-copy" data-tr="© 2025 Dentaist Avcılar. Tüm hakları saklıdır." data-en="© 2025 Dentaist Avcılar. All rights reserved." data-ar="© 2025 دنتايست أفجيلار. جميع الحقوق محفوظة.">© 2025 Dentaist Avcılar. Tüm hakları saklıdır.</div>
+  <div class="footer-social">
+    <a href="#" class="social-link">in</a>
+    <a href="#" class="social-link">ig</a>
+    <a href="#" class="social-link">fb</a>
+  </div>
+</footer>
+
+<!-- WHATSAPP -->
+<a href="https://wa.me/90XXXXXXXXXX" class="whatsapp-float" target="_blank">💬</a>
+
+<script>
+  // NAV SCROLL
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('mainNav');
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // SCROLL REVEAL
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // LANGUAGE SYSTEM
+  let currentLang = 'tr';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    // RTL for Arabic
+    document.body.classList.toggle('rtl', lang === 'ar');
+    document.documentElement.lang = lang;
+
+    // Update all elements with data-{lang}
+    document.querySelectorAll('[data-' + lang + ']').forEach(el => {
+      const val = el.getAttribute('data-' + lang);
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        el.placeholder = val;
+      } else if (el.tagName === 'OPTION') {
+        el.textContent = val;
+      } else {
+        el.innerHTML = val;
+      }
+    });
+  }
+
+  // MOBILE MENU
+  function toggleMobile() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
