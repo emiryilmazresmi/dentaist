@@ -1468,6 +1468,10 @@
     </div>
   </div>
 
+  <div style="margin-bottom:32px;border:1px solid rgba(201,168,76,0.15);overflow:hidden;">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.5!2d28.7!3d40.98!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zQXZjxLFsYXIsIMSwc3RhbmJ1bA!5e0!3m2!1str!2str!4v1" width="100%" height="250" style="border:0;filter:invert(90%) hue-rotate(180deg);" allowfullscreen="" loading="lazy"></iframe>
+  </div>
+
   <form class="contact-form reveal" action="https://formspree.io/f/FORM_ID" method="POST">
     <div class="form-row">
       <div class="form-group">
@@ -1584,6 +1588,18 @@
       answer.style.maxHeight = answer.scrollHeight + 'px';
     }
   }
+
+  function acceptCookie() { localStorage.setItem('cookieAccepted','true'); document.getElementById('cookieBanner').style.display='none'; }
+  function rejectCookie() { document.getElementById('cookieBanner').style.display='none'; }
+  window.addEventListener('load', function(){ if(localStorage.getItem('cookieAccepted')) document.getElementById('cookieBanner').style.display='none'; });
 </script>
+
+<div id="cookieBanner" style="position:fixed;bottom:0;left:0;right:0;background:rgba(17,17,17,0.98);border-top:1px solid rgba(201,168,76,0.3);padding:20px 60px;display:flex;align-items:center;justify-content:space-between;z-index:9999;backdrop-filter:blur(10px);">
+  <p style="font-size:12px;color:var(--white-dim);max-width:600px;line-height:1.6;" data-tr="Bu site deneyiminizi geliştirmek için çerezler kullanmaktadır. KVKK kapsamında kişisel verileriniz korunmaktadır." data-en="This site uses cookies to improve your experience. Your personal data is protected under GDPR." data-ar="يستخدم هذا الموقع ملفات تعريف الارتباط لتحسين تجربتك. بياناتك الشخصية محمية.">Bu site deneyiminizi geliştirmek için çerezler kullanmaktadır. KVKK kapsamında kişisel verileriniz korunmaktadır.</p>
+  <div style="display:flex;gap:12px;flex-shrink:0;margin-left:40px;">
+    <button onclick="acceptCookie()" style="background:var(--gold);color:var(--dark);border:none;padding:10px 24px;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:Montserrat,sans-serif;font-weight:600;" data-tr="Kabul Et" data-en="Accept" data-ar="قبول">Kabul Et</button>
+    <button onclick="rejectCookie()" style="background:none;border:1px solid rgba(201,168,76,0.4);color:var(--white-dim);padding:10px 24px;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:Montserrat,sans-serif;" data-tr="Reddet" data-en="Reject" data-ar="رفض">Reddet</button>
+  </div>
+</div>
 </body>
 </html>
