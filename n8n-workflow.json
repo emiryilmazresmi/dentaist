@@ -1,0 +1,237 @@
+{
+  "name": "Dental Tourism Germany - Lead Form",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ddc7c9c3-d925-40c4-9a1b-6d89c8ebb4a6",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "node-webhook",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "ddc7c9c3-d925-40c4-9a1b-6d89c8ebb4a6"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"status\": \"ok\" }",
+        "options": {}
+      },
+      "id": "node-respond",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [460, 180]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "f1", "name": "name",      "value": "={{ $json.body.name }}",        "type": "string" },
+            { "id": "f2", "name": "email",     "value": "={{ $json.body.email }}",       "type": "string" },
+            { "id": "f3", "name": "phone",     "value": "={{ $json.body.telefon }}",     "type": "string" },
+            { "id": "f4", "name": "age",       "value": "={{ $json.body.alter }}",       "type": "string" },
+            { "id": "f5", "name": "problem",   "value": "={{ $json.body.zahnproblem }}", "type": "string" },
+            { "id": "f6", "name": "source",    "value": "={{ $json.body.source }}",      "type": "string" },
+            { "id": "f7", "name": "timestamp", "value": "={{ $json.body.timestamp }}",   "type": "string" },
+            { "id": "f8", "name": "date",      "value": "={{ $now.format('dd.MM.yyyy HH:mm') }}", "type": "string" },
+            { "id": "f9", "name": "status",    "value": "Neu",                           "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-set",
+      "name": "Parse Lead Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": { "__rl": true, "value": "GOOGLE_SHEET_ID", "mode": "id" },
+        "sheetName": { "__rl": true, "value": "Germany Campaign", "mode": "name" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name":    "={{ $json.name }}",
+            "Email":   "={{ $json.email }}",
+            "Phone":   "={{ $json.phone }}",
+            "Age":     "={{ $json.age }}",
+            "Problem": "={{ $json.problem }}",
+            "Source":  "={{ $json.source }}",
+            "Date":    "={{ $json.date }}",
+            "Status":  "={{ $json.status }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            { "id": "Name",    "displayName": "Name",    "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Email",   "displayName": "Email",   "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Phone",   "displayName": "Phone",   "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Age",     "displayName": "Age",     "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Problem", "displayName": "Problem", "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Source",  "displayName": "Source",  "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Date",    "displayName": "Date",    "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true },
+            { "id": "Status",  "displayName": "Status",  "required": false, "defaultMatch": false, "display": true, "type": "string", "canBeUsedToMatch": true }
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-sheets",
+      "name": "Google Sheets - Append Lead",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [700, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": { "id": "GOOGLE_CRED_ID", "name": "Google Sheets account" }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendMessage",
+        "phoneNumberId": "WHATSAPP_PHONE_NUMBER_ID",
+        "recipientPhoneNumber": "={{ $json.phone }}",
+        "textBody": "Hallo {{ $json.name }},\n\nVielen Dank für Ihre Anfrage bei Dentaist! 😊\n\nWir haben Ihre Anfrage erhalten und werden uns innerhalb von 24 Stunden auf Deutsch bei Ihnen melden.\n\nIhr gewünschte Behandlung: {{ $json.problem }}\n\nMit freundlichen Grüßen,\nTeam Dentaist Avcılar 🦷\n\n✉️ info@dentaist.com.tr",
+        "additionalFields": {}
+      },
+      "id": "node-whatsapp",
+      "name": "WhatsApp - Welcome Message",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [940, 200],
+      "credentials": {
+        "whatsAppTriggerApi": { "id": "WHATSAPP_CRED_ID", "name": "WhatsApp account" }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "info@dentaist.com.tr",
+        "fromName": "Dentaist Avcılar",
+        "toEmail": "={{ $json.email }}",
+        "subject": "Ihr kostenloses Zahnarzt-Consulting wartet 💎",
+        "emailType": "html",
+        "message": "<!DOCTYPE html><html><body style=\"font-family:Arial,sans-serif;background:#f5f0e8;padding:32px\"><div style=\"max-width:580px;margin:0 auto;background:#0a0a0a;color:#f5f0e8;padding:48px\"><h1 style=\"font-size:24px;color:#C9A84C;margin-bottom:24px\">Willkommen bei Dentaist!</h1><p style=\"line-height:1.8;margin-bottom:16px\">Hallo {{ $json.name }},</p><p style=\"line-height:1.8;margin-bottom:16px\">Willkommen bei Dentaist Avcılar! Sie haben sich für ein kostenloses Consulting interessiert — großartig.</p><p style=\"line-height:1.8;margin-bottom:24px\">Als nächster Schritt zeigen wir Ihnen, wie ein Smile-Makeover funktioniert und was es kostet.</p><div style=\"margin:32px 0\"><p style=\"font-weight:bold;color:#C9A84C;margin-bottom:12px\">Was erwartet Sie?</p><ul style=\"line-height:2;padding-left:20px\"><li>Unverbindliche Video-Konsultation auf Deutsch</li><li>Personalisierter Kostenvoranschlag</li><li>Behandlungsplan maßgeschneidert für Sie</li><li>Alle Fragen beantwortet — auf Deutsch</li></ul></div><p style=\"color:#C9A84C;font-weight:bold\">Typische Ersparnis für deutsche Patienten: 60-75% vs. Berlin/München</p><br><p style=\"line-height:1.8\">Mit freundlichen Grüßen,<br>Dr. &amp; Team Dentaist Avcılar</p></div></body></html>",
+        "options": {}
+      },
+      "id": "node-email-day1",
+      "name": "Email - Day 1: Welcome",
+      "type": "n8n-nodes-base.sendinblue",
+      "typeVersion": 1,
+      "position": [940, 380],
+      "credentials": {
+        "sendinblueApi": { "id": "BREVO_CRED_ID", "name": "Brevo account" }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 2,
+        "unit": "days"
+      },
+      "id": "node-wait-day3",
+      "name": "Wait 2 Days",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1180, 380],
+      "webhookId": "wait-day3-webhook"
+    },
+    {
+      "parameters": {
+        "fromEmail": "info@dentaist.com.tr",
+        "fromName": "Dentaist Avcılar",
+        "toEmail": "={{ $json.email }}",
+        "subject": "100+ Patienten aus Deutschland berichten... 😊",
+        "emailType": "html",
+        "message": "<!DOCTYPE html><html><body style=\"font-family:Arial,sans-serif;background:#f5f0e8;padding:32px\"><div style=\"max-width:580px;margin:0 auto;background:#0a0a0a;color:#f5f0e8;padding:48px\"><h1 style=\"font-size:24px;color:#C9A84C;margin-bottom:24px\">Was sagen andere Deutsche über Dentaist?</h1><p style=\"line-height:1.8;margin-bottom:16px\">Hallo {{ $json.name }},</p><p style=\"line-height:1.8;margin-bottom:24px\">wir möchten Ihnen zeigen, was andere deutsche Patienten über uns sagen:</p><div style=\"background:#1a1a1a;padding:24px;margin-bottom:24px\"><p style=\"color:#C9A84C;font-size:18px;margin-bottom:16px\">📊 Unsere Zahlen</p><ul style=\"line-height:2.2;list-style:none;padding:0\"><li>👥 100+ Patienten aus Deutschland im letzten Jahr</li><li>⭐ 98% Zufriedenheitsquote</li><li>💰 Durchschnittliche Ersparnis: €4.200 pro Patient</li><li>😊 200+ dokumentierte Transformationen</li></ul></div><blockquote style=\"border-left:3px solid #C9A84C;padding-left:20px;font-style:italic;color:#C9A84C;margin:24px 0\">„Ich war skeptisch. Aber in 2 Wochen war ich wieder zu Hause mit einem neuen Lächeln und €6.000 in meinem Portemonnaie.\"<br><small style=\"color:#f5f0e8;font-style:normal\">— Barbara K., München</small></blockquote><p style=\"line-height:1.8\">Mit freundlichen Grüßen,<br>Team Dentaist Avcılar</p></div></body></html>",
+        "options": {}
+      },
+      "id": "node-email-day3",
+      "name": "Email - Day 3: Social Proof",
+      "type": "n8n-nodes-base.sendinblue",
+      "typeVersion": 1,
+      "position": [1420, 380],
+      "credentials": {
+        "sendinblueApi": { "id": "BREVO_CRED_ID", "name": "Brevo account" }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 4,
+        "unit": "days"
+      },
+      "id": "node-wait-day7",
+      "name": "Wait 4 More Days",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [1660, 380],
+      "webhookId": "wait-day7-webhook"
+    },
+    {
+      "parameters": {
+        "fromEmail": "info@dentaist.com.tr",
+        "fromName": "Dentaist Avcılar",
+        "toEmail": "={{ $json.email }}",
+        "subject": "Ostern-Angebot: -20% auf Komplettbehandlungen 🎁",
+        "emailType": "html",
+        "message": "<!DOCTYPE html><html><body style=\"font-family:Arial,sans-serif;background:#f5f0e8;padding:32px\"><div style=\"max-width:580px;margin:0 auto;background:#0a0a0a;color:#f5f0e8;padding:48px\"><h1 style=\"font-size:24px;color:#C9A84C;margin-bottom:24px\">🎁 Ostern-Angebot speziell für Sie</h1><p style=\"line-height:1.8;margin-bottom:16px\">Hallo {{ $json.name }},</p><p style=\"line-height:1.8;margin-bottom:24px\">wir haben ein zeitlich begrenztes Angebot speziell für deutsche Patienten:</p><div style=\"background:#1a1a1a;padding:24px;margin-bottom:24px\"><ul style=\"line-height:2.5;list-style:none;padding:0\"><li>🎁 <strong style=\"color:#C9A84C\">20% Rabatt</strong> auf Komplettbehandlungen</li><li>📅 Gültig für April-Buchungen</li><li>🏨 Kostenlose Hotelkoordination (4-Sterne)</li></ul></div><div style=\"background:#242424;padding:20px;margin-bottom:24px\"><p style=\"color:#C9A84C;margin-bottom:12px;font-weight:bold\">Verfügbare April-Slots:</p><p style=\"line-height:2\">✓ April 10–14<br>✓ April 20–25 (Peak-Ostern)<br>✓ April 28–30</p></div><p style=\"color:#C9A84C;font-weight:bold;margin-bottom:24px\">Diese Termine füllen sich schnell. Reservieren Sie jetzt.</p><p style=\"line-height:1.8\">Zahnmedizinische Grüße,<br>Dr. &amp; Team Dentaist Avcılar</p></div></body></html>",
+        "options": {}
+      },
+      "id": "node-email-day7",
+      "name": "Email - Day 7: Urgency",
+      "type": "n8n-nodes-base.sendinblue",
+      "typeVersion": 1,
+      "position": [1900, 380],
+      "credentials": {
+        "sendinblueApi": { "id": "BREVO_CRED_ID", "name": "Brevo account" }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          { "node": "Respond to Webhook", "type": "main", "index": 0 },
+          { "node": "Parse Lead Data",    "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Parse Lead Data": {
+      "main": [[{ "node": "Google Sheets - Append Lead", "type": "main", "index": 0 }]]
+    },
+    "Google Sheets - Append Lead": {
+      "main": [
+        [
+          { "node": "WhatsApp - Welcome Message", "type": "main", "index": 0 },
+          { "node": "Email - Day 1: Welcome",     "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Email - Day 1: Welcome": {
+      "main": [[{ "node": "Wait 2 Days", "type": "main", "index": 0 }]]
+    },
+    "Wait 2 Days": {
+      "main": [[{ "node": "Email - Day 3: Social Proof", "type": "main", "index": 0 }]]
+    },
+    "Email - Day 3: Social Proof": {
+      "main": [[{ "node": "Wait 4 More Days", "type": "main", "index": 0 }]]
+    },
+    "Wait 4 More Days": {
+      "main": [[{ "node": "Email - Day 7: Urgency", "type": "main", "index": 0 }]]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": ""
+  },
+  "staticData": null,
+  "tags": [{ "name": "dental-germany" }],
+  "triggerCount": 0,
+  "updatedAt": "2026-03-31T00:00:00.000Z",
+  "versionId": "1"
+}
