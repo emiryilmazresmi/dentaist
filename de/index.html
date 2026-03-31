@@ -1076,7 +1076,7 @@
       <span>Unser Team meldet sich innerhalb von 24 Stunden auf Deutsch bei Ihnen.</span>
     </div>
     <div id="formError" class="form-error" style="display:none">
-      <p>Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut oder schreiben Sie uns direkt: <a href="mailto:info@dentaist.com.tr">info@dentaist.com.tr</a></p>
+      <p></p>
     </div>
   </div>
 </section>
@@ -1111,16 +1111,34 @@
     e.preventDefault();
     errorEl.style.display = 'none';
 
+    // Client-side validation
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const telefon = document.getElementById('telefon').value.trim();
+    const zahnproblem = document.getElementById('zahnproblem').value;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!name || !email || !telefon || !zahnproblem) {
+      errorEl.querySelector('p').textContent = 'Bitte füllen Sie alle Pflichtfelder aus.';
+      errorEl.style.display = 'block';
+      return;
+    }
+    if (!emailRegex.test(email)) {
+      errorEl.querySelector('p').textContent = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+      errorEl.style.display = 'block';
+      return;
+    }
+
     const btn = form.querySelector('.form-submit');
     btn.disabled = true;
     btn.textContent = 'Wird gesendet...';
 
     const data = {
-      name: document.getElementById('name').value.trim(),
-      email: document.getElementById('email').value.trim(),
-      telefon: document.getElementById('telefon').value.trim(),
+      name,
+      email,
+      telefon,
       alter: document.getElementById('alter').value.trim(),
-      zahnproblem: document.getElementById('zahnproblem').value,
+      zahnproblem,
       source: 'dentaist.com.tr/de',
       timestamp: new Date().toISOString()
     };
@@ -1132,13 +1150,14 @@
         body: JSON.stringify(data)
       });
 
-      if (res.ok || res.status === 200) {
+      if (res.ok) {
         form.style.display = 'none';
         successEl.style.display = 'block';
       } else {
         throw new Error('Server error: ' + res.status);
       }
     } catch (err) {
+      errorEl.querySelector('p').innerHTML = 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut oder schreiben Sie uns direkt: <a href="mailto:info@dentaist.com.tr">info@dentaist.com.tr</a>';
       errorEl.style.display = 'block';
       btn.disabled = false;
       btn.textContent = 'Beratung kostenlos anfordern';
